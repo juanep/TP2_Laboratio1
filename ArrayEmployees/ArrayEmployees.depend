@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1538719335 source:c:\users\juan\desktop\guía de ejercicios\empleados\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Empleados.h"
+
+1538771207 source:c:\users\juan\desktop\guía de ejercicios\empleados\empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"Empleados.h"
+
+1538771207 c:\users\juan\desktop\guía de ejercicios\empleados\empleados.h
+
