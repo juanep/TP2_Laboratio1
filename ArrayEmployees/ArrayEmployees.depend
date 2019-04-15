@@ -14,3 +14,18 @@
 
 1538771207 c:\users\juan\desktop\guía de ejercicios\empleados\empleados.h
 
+1555371038 source:c:\users\alumno\desktop\tp2_laboratio1-master\arrayemployees\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayEmployees.h"
+
+1555371038 c:\users\alumno\desktop\tp2_laboratio1-master\arrayemployees\arrayemployees.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1555371679 source:c:\users\alumno\desktop\tp2_laboratio1-master\arrayemployees\arrayemployees.c
+	"ArrayEmployees.h"
+

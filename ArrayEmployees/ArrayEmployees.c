@@ -1,15 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include "Empleados.h"
+#include "ArrayEmployees.h"
 
 #define VACIO 1
 #define OCUPADO 0
 
 /*
-employee getEmployee(){
-    employee empleado;
+Employee getEmployee(){
+    Employee empleado;
     empleado.id++;
     getString(empleado.name, "Ingrese nombre: ", "Error, ingrese solo letras respetando el rango (3 a 20): ", 3, 20, 3);
     getString(empleado.lastName, "Ingrese apellido: ", "Error, ingrese solo letras respetando el rango (3 a 20): ", 3, 20, 3);
@@ -38,15 +34,17 @@ int menu(){ // bien!
     return opcion;
 }
 
-void initEmployeeList(employee lista[], int tam){ // bien!
-    for(int contador=0; contador<tam; contador++){
-        lista[contador].isEmpty = VACIO;
+void initEmployeeList(Employee* lista, int tam){
+    int* contador = (int*) malloc(sizeof(int));
+    for(*contador = 0; *contador < tam; (*contador)++){
+        (lista+(*contador))->isEmpty = VACIO;
     }
+    free(contador);
 }
 
-int addEmployee(employee lista[], int tam, eSector sectores[], int tamSector){
+int addEmployee(Employee lista[], int tam, eSector sectores[], int tamSector){
     int indice, control;
-    employee nuevoEmpleado;
+    Employee nuevoEmpleado;
 
     indice = buscarLibre(lista, tam);
     system("cls");
@@ -82,7 +80,7 @@ int addEmployee(employee lista[], int tam, eSector sectores[], int tamSector){
     return control;
 }
 
-int ModificarEmpleado(employee lista[], int tam, int *legajo, eSector sectores[], int tamSector){
+int ModificarEmpleado(Employee lista[], int tam, int *legajo, eSector sectores[], int tamSector){
     int indice, control, bandera;
     char seguir;
 
@@ -93,7 +91,7 @@ int ModificarEmpleado(employee lista[], int tam, int *legajo, eSector sectores[]
         bandera = 0;
         printf("No se obtuvo el numero de legajo.");
     }else{
-        indice = buscarEmpleado(lista, tam, *legajo);
+        indice = findEmployeeById(lista, tam, *legajo);
         if(indice == -1){
             bandera = -1;
         }else{
@@ -117,7 +115,7 @@ int ModificarEmpleado(employee lista[], int tam, int *legajo, eSector sectores[]
     return bandera;
 }
 
-int bajaEmpleado(employee lista[], int tam, int legajo, eSector sectores[], int tamSector){
+int removeEmployee(Employee lista[], int tam, int legajo, eSector sectores[], int tamSector){
     int indice, control, bandera;
     char seguir;
 
@@ -128,7 +126,7 @@ int bajaEmpleado(employee lista[], int tam, int legajo, eSector sectores[], int 
         bandera = 0;
         printf("No se pudo ingresar el numero de legajo.");
     }else{
-        indice = buscarEmpleado(lista, tam, legajo);
+        indice = findEmployeeById(lista, tam, legajo);
         if( indice == -1){
             bandera = -1;
         }else{
@@ -153,7 +151,7 @@ int bajaEmpleado(employee lista[], int tam, int legajo, eSector sectores[], int 
     return bandera;
 }
 
-int buscarLibre(employee lista[], int tam){
+int buscarLibre(Employee lista[], int tam){
     int indice = -1;
     for(int contador=0; contador < tam; contador++){
         if( lista[contador].isEmpty == 1){
@@ -164,7 +162,7 @@ int buscarLibre(employee lista[], int tam){
     return indice;
 }
 
-int comprobarRegistro(employee lista[], int tam){
+int comprobarRegistro(Employee lista[], int tam){
     int bandera = -1;
     for(int contador=0; contador < tam; contador++){
         if( lista[contador].isEmpty == OCUPADO){
@@ -175,7 +173,7 @@ int comprobarRegistro(employee lista[], int tam){
     return bandera;
 }
 
-int buscarEmpleado(employee lista[], int tam, int legajo){
+int findEmployeeById(Employee lista[], int tam, int legajo){
     int indice = -1;
     for(int contador=0; contador < tam; contador++){
         if( lista[contador].id == legajo && lista[contador].isEmpty == OCUPADO){
@@ -186,7 +184,7 @@ int buscarEmpleado(employee lista[], int tam, int legajo){
     return indice;
 }
 
-void showEmployee(employee lista, eSector sectores[], int tamSector){
+void showEmployee(Employee lista, eSector sectores[], int tamSector){
     char descSector[20];
     obtenerSector(sectores, tamSector, lista.sector, descSector);
     printf("%4d %10s %10s     %6.2f %10s\n", lista.id, lista.name, lista.lastName, lista.salary, descSector);
@@ -200,7 +198,7 @@ void obtenerSector(eSector sectores[], int tam, int idSector, char cadena[]){
     }
 }
 
-void showEmployeesList(employee lista[], int tam, eSector sectores[], int tamSector){
+void showEmployeesList(Employee lista[], int tam, eSector sectores[], int tamSector){
     system("cls");
     printf("       ****  Listado de empleados  **** \n\n");
     printf("Legajo   Nombre   Apellido      Sueldo      Sector\n\n");
@@ -220,9 +218,9 @@ void listarSectores(eSector sectores[], int tam){
     printf("\n");
 }
 /*
-void orderEmployeesListByLastName(employee list[], int tam){
+void orderEmployeesListByLastName(Employee list[], int tam){
     int count, contador;
-    employee aux;
+    Employee aux;
     for(count=0; count<tam-1; count++){
         for(contador=count+1; contador<tam; contador++){
             if(strcmp(list[count].lastName , list[contador].lastName)>0){
@@ -234,9 +232,9 @@ void orderEmployeesListByLastName(employee list[], int tam){
     }
 }*/
 
-void orderEmployeesListBySectorAndLastName(employee list[], int tam){
+void orderEmployeesListBySectorAndLastName(Employee list[], int tam){
     int count, contador;
-    employee aux;
+    Employee aux;
     for(count=0; count<tam-1; count++){
         for(contador=count+1; contador<tam; contador++){
             if(list[count].sector > list[contador].sector){
@@ -351,7 +349,7 @@ int getChar(char *x, char ing[], char err[], char inf, char sup, int chances){
     return bandera; // si (bandera == 0) no obtuvo el caracter.
 }
 
-float total_y_promedio(employee lista[], int tam){
+float total_y_promedio(Employee lista[], int tam){
     float acumSueldo=0, promedio;
     int cantEmpleados=0;
     for(int contador=0; contador<tam; contador++){
@@ -364,7 +362,7 @@ float total_y_promedio(employee lista[], int tam){
     return promedio;
 }
 
-void empleadosQueSuperanPromedio(employee lista[], int tam, float promedio, eSector sectores[], int tamSector){
+void empleadosQueSuperanPromedio(Employee lista[], int tam, float promedio, eSector sectores[], int tamSector){
     int empleadosGanadores=0;
     printf("\n  *** Empleados que superan el sueldo promedio ***  \n\n");
     printf("Legajo   Nombre   Apellido      Sueldo      Sector\n\n");
@@ -379,7 +377,7 @@ void empleadosQueSuperanPromedio(employee lista[], int tam, float promedio, eSec
     printf("\n");
 }
 
-int menuModificarEmpleado(employee lista[], int indice, eSector sectores[], int tamSector){ // bien!
+int menuModificarEmpleado(Employee lista[], int indice, eSector sectores[], int tamSector){ // bien!
     int opcion, nuevoSector, control;
     char nuevoNombre[20], nuevoApellido[20];
     float nuevoSueldo;
@@ -412,8 +410,8 @@ int menuModificarEmpleado(employee lista[], int indice, eSector sectores[], int 
     return control;
 }
 
-/*void harcodearEmpleados(employee empleados[]){
-    employee x[]=
+/*void harcodearEmpleados(Employee empleados[]){
+    Employee x[]=
     {
         {111, "juan", "perez", 23000,1,0},
         {222, "luis", "aguilar", 18000, 1, 0},

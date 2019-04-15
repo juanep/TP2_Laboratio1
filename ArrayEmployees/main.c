@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Empleados.h"
+#include "ArrayEmployees.h"
 
 #define TAM 999
 #define VACIO 1
 #define OCUPADO 0
 
-//void entero(int *x);
 int main()
 {
     char resp = 's';
@@ -20,7 +19,7 @@ int main()
         {4, "Contable"},
         {5, "Sistemas"}
     };
-    employee empleados[TAM];
+    Employee empleados[TAM];
 
     initEmployeeList(empleados, TAM);
     //harcodearEmpleados(empleados);
@@ -59,7 +58,7 @@ int main()
                 if(control == -1){
                     printf("\nHasta el momento no se ha registrado ningun empleado.\n\n");
                 }else{
-                    control = bajaEmpleado(empleados, TAM, legajo, sectores, 5);
+                    control = removeEmployee(empleados, TAM, legajo, sectores, 5);
                     if(control == -1){
                         printf("No hay ningun empleado de legajo %d\n\n", legajo);
                     }else if(control == 0){

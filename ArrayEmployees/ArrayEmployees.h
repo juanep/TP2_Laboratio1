@@ -1,3 +1,10 @@
+#ifndef ARRAYEMPLOYEES_H_INCLUDED
+#define ARRAYEMPLOYEES_H_INCLUDED
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 typedef struct{
     int id;
@@ -6,7 +13,7 @@ typedef struct{
     float salary;
     int sector;
     int isEmpty;
-}employee;
+}Employee;
 
 typedef struct{
     int id;
@@ -25,14 +32,14 @@ int menu();
  * \param len int Array length
  * \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
  * */
-void initEmployeeList(employee lista[], int tam);
+void initEmployeeList(Employee lista[], int tam);
 
 /** \brief add in a existing list of employees the values received as parameters in the first empty position
  * \param lista es el listado de los empleados.
  * \param tam es la cantidad de empleados que pueden registrarse en el listado.
  * \return int Return (-1) if Error [Invalid length or NULL pointer or without free space] - (0) if Ok
  **/
-int addEmployee(employee lista[], int tam, eSector sectores[], int tamSector);
+int addEmployee(Employee lista[], int tam, eSector sectores[], int tamSector);
 
 /** \brief Recibe valores por parametro para modificar los campos del empleado,
  *          dicho empleado es elegido a travez del ingreso de su numero de legajo.
@@ -43,7 +50,7 @@ int addEmployee(employee lista[], int tam, eSector sectores[], int tamSector);
  * \param tamSector es la cantidad de sectores.
  * \return Devuelve (-1) si no encontro el indice, (0) si no pudo obtener los datos solicitados, (1) si obtuvo los datos.
  */
-int ModificarEmpleado(employee lista[], int tam, int *legajo, eSector sectores[], int tamSector);
+int ModificarEmpleado(Employee lista[], int tam, int *legajo, eSector sectores[], int tamSector);
 
 /** \brief Recibe valores por parametro para dar de baja un empleado, dicho empleado
  *          es hallado a travez del ingreso de su numero de legajo.
@@ -51,14 +58,14 @@ int ModificarEmpleado(employee lista[], int tam, int *legajo, eSector sectores[]
  * \param  tam es la cantidad limite de empleados que se pueden ingresar.
  * \return *legajo es el puntero a la variable legajo del main, para hallar al empleado y pueda ser usado en los informes.
  */
-int bajaEmpleado(employee lista[], int tam, int legajo, eSector sectores[], int tamSector);
+int removeEmployee(Employee lista[], int tam, int legajo, eSector sectores[], int tamSector);
 
 /** \brief Recorre el listado de empleados en busca de un lugar disponible.
  * \param lista es el listado de los empleados.
  * \param tam es la cantidad limite de empleados que se pueden registrar en el listado.
  * \return (Indice = -1) si no encontro lugar disponible. (Indice = ubicacion del indice disponible)
  */
-int buscarLibre(employee lista[], int tam);
+int buscarLibre(Employee lista[], int tam);
 
 /** \brief Recorre el listado en busca de un empleado, utilizando como referencia el numero de legajo del mismo.
  * \param lista es el listado de empleados.
@@ -67,14 +74,14 @@ int buscarLibre(employee lista[], int tam);
  * \return (Indice = -1) si no encontro el empleado. (Indice = ubicacion del empleado segun su legajo)
  *
  */
-int buscarEmpleado(employee lista[], int tam, int legajo);
+int findEmployeeById(Employee lista[], int tam, int legajo);
 
 /** \brief Muestra los datos de un empleado.
  * \param lista es el listado de empleados.
  * \param sectores es el array de sectores para la distribucion de los empleados.
  * \param tamSector la cantidad de sectores existentes.
  */
-void showEmployee(employee lista, eSector sectores[], int tamSector);
+void showEmployee(Employee lista, eSector sectores[], int tamSector);
 
 /** \brief Toma valores por parametro para obtener el nombre del sector al que corresponde el empleado.
  * \param sectores es el array de sectores para la distribucion de los empleados.
@@ -90,7 +97,7 @@ void obtenerSector(eSector sectores[], int tam, int idSector, char cadena[]);
  * \param sectores es el array de sectores para la distribucion de los empleados.
  * \param tamSector la cantidad de sectores existentes.
  */
-void showEmployeesList(employee lista[], int tam, eSector sectores[], int tamSector);
+void showEmployeesList(Employee lista[], int tam, eSector sectores[], int tamSector);
 
 /** \brief Muestra el listado de los sectores con sus respectivos id y descripcion.
  * \param sectores es el array de sectores para la distribucion de los empleados.
@@ -102,7 +109,7 @@ void listarSectores(eSector sectores[], int tam);
  * \param lista es el listado de empleados.
  * \param tam es la cantidad limite de empleados que pueden registrarse.
  */
-void orderEmployeesListBySectorAndLastName(employee lista[], int tam);
+void orderEmployeesListBySectorAndLastName(Employee lista[], int tam);
 
 /** \brief Pide y valida un array de char.
  * \param String es el array en cuestion.
@@ -157,7 +164,7 @@ int getChar(char *x, char ing[], char err[], char inf, char sup, int chances);
  * \param tam es la cantidad limite de empleados que pueden registrarse.
  * \return Devuelve del promedio de sueldos.
  */
-float total_y_promedio(employee lista[], int tam);
+float total_y_promedio(Employee lista[], int tam);
 
 /** \brief Busca y muestra los empleados que superan el sueldo promedio.
  * \param lista es el listado de empleados.
@@ -166,7 +173,7 @@ float total_y_promedio(employee lista[], int tam);
  * \param sectores es el array de sectores para la distribucion de los empleados.
  * \param tamSector la cantidad de sectores existentes.
  */
-void empleadosQueSuperanPromedio(employee lista[], int tam, float promedio, eSector sectores[], int tamSector);
+void empleadosQueSuperanPromedio(Employee lista[], int tam, float promedio, eSector sectores[], int tamSector);
 
 /** \brief Muestra los datos del empleado, de los cuales el usuario optara cual desea modificar.
  * \param indice es el indice donde se encuentra el registro del empleado.
@@ -174,12 +181,15 @@ void empleadosQueSuperanPromedio(employee lista[], int tam, float promedio, eSec
  * \param tamSector la cantidad de sectores existentes.
  * \return (-1) si no pudo modificar el dato. (0) si modifico correctamente el dato.
  */
-int menuModificarEmpleado(employee lista[], int indice, eSector sectores[], int tamSector);
+int menuModificarEmpleado(Employee lista[], int indice, eSector sectores[], int tamSector);
 
-//void harcodearEmpleados(employee empleados[]);
+//void harcodearEmpleados(Employee empleados[]);
 /** \brief Verifica que se haya registrado al menos 1 empleado para habilitar las opciones 2, 3 y 4 del menu.
  * \param lista es el listado de empleados.
  * \param tam es la cantidad limite de empleados que pueden registrarse.
  * \return indice(-1) si no encontro registros. (indice = registro) cuando encuetre el 1er registro.
  */
-int comprobarRegistro(employee lista[], int tam);
+int comprobarRegistro(Employee lista[], int tam);
+
+
+#endif // ARRAYEMPLOYEES_H_INCLUDED
